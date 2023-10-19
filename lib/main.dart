@@ -125,10 +125,25 @@ class ProximaTela extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Próxima Tela'),
+        title: Text('Créditos'),
       ),
       body: Center(
-        child: Text('Esta em andamento.'),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.lightBlue],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              'Desenvolvido por:\nDouglas Arthur da Silva Bento\nWandell da Costa Mota',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+        ),
       ),
     );
   }

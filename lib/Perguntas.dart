@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/main.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: perguntas(),
+  ));
+}
 
 class perguntas extends StatelessWidget {
   @override
@@ -56,6 +61,7 @@ class _ShowDoMilhaoScreenState extends State<ShowDoMilhaoScreen> {
 
   int currentQuestionIndex = 0;
   bool answerSelected = false;
+  int pontos = 0; // Variável para rastrear a pontuação
 
   void showNextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
@@ -64,14 +70,19 @@ class _ShowDoMilhaoScreenState extends State<ShowDoMilhaoScreen> {
         answerSelected = false;
       });
     } else {
-      Navigator.of(context).push(_createRoute(TelaFinal()));
+      Navigator.of(context).push(_createRoute(TelaFinal(pontos: pontos))); // Passa a pontuação para a TelaFinal
     }
   }
 
   void selectAnswer(String selectedOption) {
-    setState(() {
-      answerSelected = true;
-    });
+    if (!answerSelected) {
+      setState(() {
+        if (selectedOption == questions[currentQuestionIndex]['correctOption']) {
+          pontos++; // Incrementa a pontuação se a resposta estiver correta
+        }
+        answerSelected = true;
+      });
+    }
   }
 
   PageRouteBuilder _createRoute(Widget page) {
@@ -144,7 +155,12 @@ class _ShowDoMilhaoScreenState extends State<ShowDoMilhaoScreen> {
     );
   }
 }
+
 class TelaFinal extends StatelessWidget {
+  final int pontos; // Recebe a pontuação como argumento
+
+  TelaFinal({required this.pontos});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +195,7 @@ class TelaFinal extends StatelessWidget {
                 ),
                 const SizedBox(height: 31),
                 Text(
-                  'Parabéns \nvocê tem 1 ponto',
+                  'Parabéns \nvocê tem $pontos ponto(s)', // Exibe a pontuação
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -205,6 +221,27 @@ class TelaFinal extends StatelessWidget {
             child: Text('Voltar'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Inicio extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ShowDoMilhaoScreen(),
+              ),
+            );
+          },
+          child: Text('Iniciar o jogo'),
+        ),
       ),
     );
   }
