@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quizzzzzzzzzzz/perguntas.dart';
+import 'package:quiz/Perguntas.dart';
 
 void main() {
-  runApp(const FigmaToCodeApp());
+  runApp(const Princinpal());
 }
 
-class FigmaToCodeApp extends StatelessWidget {
-  const FigmaToCodeApp({super.key});
+class Princinpal extends StatelessWidget {
+  const Princinpal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +15,13 @@ class FigmaToCodeApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
       home: Scaffold(
-        body: AndroidLarge6(),
+        body: Inicio(),
       ),
     );
   }
 }
 
-class AndroidLarge6 extends StatelessWidget {
+class Inicio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -40,22 +40,22 @@ class AndroidLarge6 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 298,
-              height: 215,
+              width: 300,
+              height: 220,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("Ohomilho.png"),
+                  image: AssetImage("assets/images/Ohomilho.png"),
                   fit: BoxFit.fill,
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 18),
             GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Perguntas(),
+                    builder: (context) => perguntas(),
                   ),
                 );
               },
@@ -98,8 +98,7 @@ class AndroidLarge6 extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   gradient: LinearGradient(
-                    colors: [Color.fromARGB(255, 255, 225, 105), Color.fromARGB(255, 255, 225, 105)],
-                  ),
+                    colors: [Color.fromARGB(255, 255, 225, 105), Color.fromARGB(255, 255, 225, 105)],),
                 ),
                 child: Center(
                   child: Text(
@@ -121,7 +120,6 @@ class AndroidLarge6 extends StatelessWidget {
     );
   }
 }
-
 class ProximaTela extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

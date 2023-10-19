@@ -1,368 +1,211 @@
 import 'package:flutter/material.dart';
-class Perguntas extends StatelessWidget {
+import 'package:quiz/main.dart';
+
+class perguntas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 420,
-          height: 860,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.00, -1.00),
-              end: Alignment(0, 1),
-              colors: [Color(0xFF373EEA), Color(0xFF000467)],
-            ),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                left: -43,
-                top: 116,
-                child: Container(
-                  width: 390,
-                  height: 173,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF00CE00),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+    return MaterialApp(
+      home: ShowDoMilhaoScreen(),
+    );
+  }
+}
+
+class ShowDoMilhaoScreen extends StatefulWidget {
+  @override
+  _ShowDoMilhaoScreenState createState() => _ShowDoMilhaoScreenState();
+}
+
+class _ShowDoMilhaoScreenState extends State<ShowDoMilhaoScreen> {
+  List<Map<String, dynamic>> questions = [
+    {
+      'question': 'Qual é a capital do Brasil?',
+      'options': ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador'],
+      'correctOption': 'Brasília'
+    },
+    {
+      'question': 'Quantos lados tem um triângulo?',
+      'options': ['Três', 'Quatro', 'Cinco', 'Seis'],
+      'correctOption': 'Três'
+    },
+    {
+      'question': 'Quem escreveu Dom Casmurro?',
+      'options': [
+        'Machado de Assis',
+        'Carlos Drummond de Andrade',
+        'José de Alencar',
+        'Eça de Queirós'
+      ],
+      'correctOption': 'Machado de Assis'
+    },
+    {
+      'question': 'Em que ano o Brasil foi descoberto?',
+      'options': ['1492', '1500', '1532', '1620'],
+      'correctOption': '1500'
+    },
+    {
+      'question': 'Qual é o maior mamífero terrestre?',
+      'options': [
+        'Elefante Africano',
+        'Baleia Azul',
+        'Rinoceronte Branco',
+        'Girafa'
+      ],
+      'correctOption': 'Elefante Africano'
+    }
+  ];
+
+  int currentQuestionIndex = 0;
+  bool answerSelected = false;
+
+  void showNextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+      setState(() {
+        currentQuestionIndex++;
+        answerSelected = false;
+      });
+    } else {
+      Navigator.of(context).push(_createRoute(TelaFinal()));
+    }
+  }
+
+  void selectAnswer(String selectedOption) {
+    setState(() {
+      answerSelected = true;
+    });
+  }
+
+  PageRouteBuilder _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+        return SlideTransition(position: offsetAnimation, child: child);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Color(0xFF1D22AC), // Adicionando a cor de fundo azul
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 80),
+              Text(
+                questions[currentQuestionIndex]['question'],
+                style: TextStyle(fontSize: 30),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 30),
+              Column(
+                children: List.generate(4, (index) {
+                  return Container(
+                    width: double.infinity,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (!answerSelected) {
+                            selectAnswer(
+                                questions[currentQuestionIndex]['options'][index]);
+                          }
+                        },
+                        child:
+                        Text(questions[currentQuestionIndex]['options'][index]),
+                        style: ElevatedButton.styleFrom(
+                          primary: answerSelected
+                          ? questions[currentQuestionIndex]['correctOption'] ==
+                          questions[currentQuestionIndex]['options'][index]
+                          ? Colors.green
+                          : Colors.red
+                          : null,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
-              Positioned(
-                left: -28,
-                top: 116,
-                child: Container(
-                  width: 375,
-                  height: 173,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFFFCE00),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 124,
-                top: 12,
-                child: Container(
-                  width: 112,
-                  height: 81,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("Ohomilho.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 15,
-                top: 345,
-                child: Container(
-                  width: 330,
-                  height: 64,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 7,
-                        child: Container(
-                          width: 330,
-                          height: 48,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFFFCE00),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 0,
-                        child: Container(
-                          width: 64,
-                          height: 64,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFF1F1F1),
-                            shape: OvalBorder(),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 27,
-                        top: 3,
-                        child: Text(
-                          '1',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 48,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 17,
-                top: 429,
-                child: Container(
-                  width: 330,
-                  height: 64,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 8,
-                        child: Container(
-                          width: 330,
-                          height: 48,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFFFCE00),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 5,
-                        top: 0,
-                        child: Container(
-                          width: 64,
-                          height: 64,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFF1F1F1),
-                            shape: OvalBorder(),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 21,
-                        top: 3,
-                        child: Text(
-                          '2',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 48,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 15,
-                top: 513,
-                child: Container(
-                  width: 330,
-                  height: 64,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 8,
-                        child: Container(
-                          width: 330,
-                          height: 48,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFFFCE00),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 0,
-                        child: Container(
-                          width: 64,
-                          height: 64,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFF1F1F1),
-                            shape: OvalBorder(),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 23,
-                        top: 3,
-                        child: Text(
-                          '3',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 48,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 15,
-                top: 597,
-                child: Container(
-                  width: 330,
-                  height: 64,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 8,
-                        child: Container(
-                          width: 330,
-                          height: 48,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFFFCE00),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 0,
-                        child: Container(
-                          width: 64,
-                          height: 64,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFF1F1F1),
-                            shape: OvalBorder(),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 23,
-                        top: 3,
-                        child: Text(
-                          '4',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 48,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 22,
-                top: 143,
-                child: Text(
-                  'Qual é o Valor de \n10+10= ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 36,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 22,
-                top: 143,
-                child: Text(
-                  'Qual é o Valor de \n10+10= ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 36,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 175,
-                top: 352,
-                child: Text(
-                  '10',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 36,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 175,
-                top: 437,
-                child: Text(
-                  '10',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 36,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 175,
-                top: 521,
-                child: Text(
-                  '10',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 36,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 170,
-                top: 605,
-                child: Text(
-                  '20',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 36,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    height: 0,
-                  ),
-                ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: showNextQuestion,
+                child: Text('Próxima Pergunta'),
               ),
             ],
           ),
         ),
-      ],
+      ),
+    );
+  }
+}
+class TelaFinal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            width: 420,
+            height: 800,
+            padding: const EdgeInsets.only(top: 127, bottom: 295),
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment(0.00, -1.00),
+                end: Alignment(0, 1),
+                colors: [Color(0xFF373EEA), Color(0xFF000467)],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 360,
+                  height: 259,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/Ohomilho.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 31),
+                Text(
+                  'Parabéns \nvocê tem 1 ponto',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 36,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Inicio(),
+                ),
+              );
+            },
+            child: Text('Voltar'),
+          ),
+        ],
+      ),
     );
   }
 }
