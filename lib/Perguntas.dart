@@ -56,7 +56,57 @@ class _ShowDoMilhaoScreenState extends State<ShowDoMilhaoScreen> {
         'Girafa'
       ],
       'correctOption': 'Elefante Africano'
-    }
+    },
+    {
+      'question': 'Mínimo de jogadores em uma partidade de futebol ?',
+      'options': [
+        '8',
+        '10',
+        '5',
+        '7'
+      ],
+      'correctOption': '7'
+    },
+    {
+      'question': 'Quantas casas decimais tem o numero PI?',
+      'options': [
+        'duas',
+        'centenas',
+        'infinitas',
+        'trilhares'
+      ],
+      'correctOption': 'infinitas'
+    },
+    {
+      'question': 'Qual o nome do presidente do Brasil\nque ficou conhecido como jango?',
+      'options': [
+        'Jânio Quadros',
+        'LULA/13',
+        'João Figueiredo',
+        'João Goularte'
+      ],
+      'correctOption': 'João Goularte'
+    },
+    {
+      'question': 'De quem é a famosa frase "Penso, logo existo"?',
+      'options': [
+        'Platão',
+        'Galileu Galilei',
+        'Sócrates',
+        'Descartes'
+      ],
+      'correctOption': 'Descartes'
+    },
+    {
+      'question': 'Quais os países que têm a a maior e a menor\nexpectativa de vida do mundo?',
+      'options': [
+        'Japão e Serra Leoa',
+        'Australia e Afeganistão',
+        'Brasil e Congo',
+        'Japão e Bolívia'
+      ],
+      'correctOption': 'Japão e Serra Leoa'
+    },
   ];
 
   int currentQuestionIndex = 0;
