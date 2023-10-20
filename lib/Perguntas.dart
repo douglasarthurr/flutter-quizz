@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/main.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -276,23 +277,4 @@ class TelaFinal extends StatelessWidget {
   }
 }
 
-class Inicio extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ShowDoMilhaoScreen(),
-              ),
-            );
-          },
-          child: Text('Iniciar o jogo'),
-        ),
-      ),
-    );
-  }
-}
+
